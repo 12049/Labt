@@ -1,0 +1,131 @@
+{
+    "units": [
+        {
+            "id": 1,
+            "title": "القواعد الأساسية",
+            "description": "أساسيات اللغة الإنجليزية للمبتدئين",
+            "icon": "fas fa-book",
+            "lessons": [
+                {
+                    "id": 1,
+                    "title": "الأفعال الأساسية",
+                    "description": "تعلم أهم الأفعال المستخدمة",
+                    "icon": "fas fa-running",
+                    "tests": [
+                        {
+                            "id": 1,
+                            "title": "اختبار الأفعال",
+                            "description": "اختبر معرفتك بالأفعال الأساسية",
+                            "icon": "fas fa-pencil-alt",
+                            "questions": [
+                                {
+                                    "id": 1,
+                                    "text": "ما هو الفعل المضارع من 'go' في الجملة: 'I ___ to school every day'?",
+                                    "options": [
+                                        "go",
+                                        "goes",
+                                        "going",
+                                        "went"
+                                    ],
+                                    "correctAnswer": 0
+                                },
+                                {
+                                    "id": 2,
+                                    "text": "ما هو تصريف الفعل 'eat' في الماضي؟",
+                                    "options": [
+                                        "eated",
+                                        "ate",
+                                        "eaten",
+                                        "eating"
+                                    ],
+                                    "correctAnswer": 1
+                                }
+                            ]
+                        },
+                        {
+                            "id": 2,
+                            "title": "اختبار الجمل",
+                            "description": "اختبر قدرتك على تكوين الجمل",
+                            "icon": "fas fa-font",
+                            "questions": [
+                                {
+                                    "id": 1,
+                                    "text": "اختر الجملة الصحيحة:",
+                                    "options": [
+                                        "He go to school",
+                                        "He goes to school",
+                                        "He going to school",
+                                        "He to go school"
+                                    ],
+                                    "correctAnswer": 1
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 2,
+                    "title": "الأسماء والضمائر",
+                    "description": "تعلم استخدام الأسماء والضمائر",
+                    "icon": "fas fa-user",
+                    "tests": [
+                        {
+                            "id": 1,
+                            "title": "اختبار الأسماء",
+                            "description": "اختبر معرفتك بالأسماء",
+                            "icon": "fas fa-font",
+                            "questions": [
+                                {
+                                    "id": 1,
+                                    "text": "ما هو جمع كلمة 'child'?",
+                                    "options": [
+                                        "childs",
+                                        "childrens",
+                                        "children",
+                                        "childes"
+                                    ],
+                                    "correctAnswer": 2
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "title": "الأزمنة",
+            "description": "تعلم استخدام الأزمنة المختلفة",
+            "icon": "fas fa-clock",
+            "lessons": [
+                {
+                    "id": 1,
+                    "title": "المضارع البسيط",
+                    "description": "تعلم استخدام المضارع البسيط",
+                    "icon": "fas fa-hourglass-start",
+                    "tests": [
+                        {
+                            "id": 1,
+                            "title": "اختبار المضارع البسيط",
+                            "description": "اختبر معرفتك بالمضارع البسيط",
+                            "icon": "fas fa-pencil-alt",
+                            "questions": [
+                                {
+                                    "id": 1,
+                                    "text": "اختر الإجابة الصحيحة: 'She ___ a book every day.'",
+                                    "options": [
+                                        "read",
+                                        "reads",
+                                        "reading",
+                                        "readed"
+                                    ],
+                                    "correctAnswer": 1
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
