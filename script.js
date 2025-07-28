@@ -1,278 +1,221 @@
-// بيانات الوحدات والاختبارات
-const units = [
-    {
-        id: 1,
-        title: "الوحدة الأولى",
-        description: "القواعد الأساسية والكلمات الشائعة",
-        icon: "fas fa-book",
-        progress: 30
-    },
-    {
-        id: 2,
-        title: "الوحدة الثانية",
-        description: "الأزمنة البسيطة",
-        icon: "fas fa-clock",
-        progress: 10
-    },
-    {
-        id: 3,
-        title: "الوحدة الثالثة",
-        description: "الأزمنة المستمرة",
-        icon: "fas fa-hourglass-half",
-        progress: 0
-    },
-    {
-        id: 4,
-        title: "الوحدة الرابعة",
-        description: "المبني للمعلوم والمجهول",
-        icon: "fas fa-exchange-alt",
-        progress: 0
-    },
-    {
-        id: 5,
-        title: "الوحدة الخامسة",
-        description: "الأسماء والضمائر",
-        icon: "fas fa-font",
-        progress: 0
-    },
-    {
-        id: 6,
-        title: "الوحدة السادسة",
-        description: "الصفات والظروف",
-        icon: "fas fa-adjust",
-        progress: 0
-    },
-    {
-        id: 7,
-        title: "الوحدة السابعة",
-        description: "أدوات الربط",
-        icon: "fas fa-link",
-        progress: 0
-    },
-    {
-        id: 8,
-        title: "الوحدة الثامنة",
-        description: "الجمل الشرطية",
-        icon: "fas fa-code-branch",
-        progress: 0
-    },
-    {
-        id: 9,
-        title: "الوحدة التاسعة",
-        description: "المقارنات",
-        icon: "fas fa-balance-scale",
-        progress: 0
-    },
-    {
-        id: 10,
-        title: "الوحدة العاشرة",
-        description: "المصادر والأفعال الناقصة",
-        icon: "fas fa-infinity",
-        progress: 0
-    },
-    {
-        id: 11,
-        title: "الوحدة الحادية عشر",
-        description: "الاختبارات المتقدمة",
-        icon: "fas fa-graduation-cap",
-        progress: 0
-    },
-    {
-        id: 12,
-        title: "الوحدة الثانية عشر",
-        description: "المراجعة النهائية",
-        icon: "fas fa-star",
-        progress: 0
-    }
-];
+/**
+ * هذا الملف يحتوي على المنطق الرئيسي للتطبيق
+ * 
+ * الهيكلية:
+ * 1. تعريف المتغيرات العامة
+ * 2. تهيئة التطبيق
+ * 3. عرض الوحدات
+ * 4. عرض الدروس
+ * 5. عرض الاختبارات
+ * 6. إدارة الأسئلة
+ * 7. حساب النتائج
+ * 8. مستمعات الأحداث
+ */
 
-const tests = [
-    { id: 1, title: "الاختبار الأول", description: "اختبار أساسيات القواعد", icon: "fas fa-pencil-alt" },
-    { id: 2, title: "الاختبار الثاني", description: "اختبار المفردات", icon: "fas fa-font" },
-    { id: 3, title: "الاختبار الثالث", description: "اختبار التحدث", icon: "fas fa-microphone" },
-    { id: 4, title: "الاختبار الرابع", description: "اختبار الاستماع", icon: "fas fa-headphones" },
-    { id: 5, title: "الاختبار الخامس", description: "اختبار القراءة", icon: "fas fa-book-reader" },
-    { id: 6, title: "الاختبار السادس", description: "اختبار الكتابة", icon: "fas fa-edit" },
-    { id: 7, title: "الاختبار السابع", description: "اختبار الترجمة", icon: "fas fa-language" },
-    { id: 8, title: "الاختبار الثامن", description: "اختبار القواعد المتقدم", icon: "fas fa-chart-bar" },
-    { id: 9, title: "الاختبار التاسع", description: "اختبار المفردات المتقدم", icon: "fas fa-bookmark" },
-    { id: 10, title: "الاختبار العاشر", description: "الاختبار الشامل", icon: "fas fa-tasks" }
-];
-
-// أسئلة الاختبارات
-const quizQuestions = [
-    {
-        id: 1,
-        question: "ما هو الفعل المضارع من 'go' في الجملة: 'I ___ to school every day'?",
-        options: [
-            "go",
-            "goes",
-            "going",
-            "went"
-        ],
-        correctAnswer: 0
-    },
-    {
-        id: 2,
-        question: "ما مرادف كلمة 'happy'?",
-        options: [
-            "Sad",
-            "Angry",
-            "Joyful",
-            "Tired"
-        ],
-        correctAnswer: 2
-    },
-    {
-        id: 3,
-        question: "اختر الإجابة الصحيحة: 'She ___ a book now.'",
-        options: [
-            "read",
-            "reads",
-            "is reading",
-            "reading"
-        ],
-        correctAnswer: 2
-    }
-];
-
-// متغيرات الحالة
-let currentUnit = null;
-let currentTest = null;
-let currentQuestion = 0;
-let userAnswers = [];
-let startTime = null;
-let timerInterval = null;
+// ==================== 1. المتغيرات العامة ====================
+let appData = {
+    units: [],
+    currentUnit: null,
+    currentLesson: null,
+    currentTest: null,
+    currentQuestion: 0,
+    userAnswers: [],
+    startTime: null,
+    timerInterval: null
+};
 
 // عناصر DOM
-const unitsSection = document.getElementById('units-section');
-const testsSection = document.getElementById('tests-section');
-const quizSection = document.getElementById('quiz-section');
-const resultsSection = document.getElementById('results-section');
-const unitsContainer = document.querySelector('.units-container');
-const testsContainer = document.querySelector('.tests-container');
-const quizContainer = document.querySelector('.quiz-container');
-const currentUnitElement = document.getElementById('current-unit');
-const currentTestElement = document.getElementById('current-test');
-const timeElement = document.getElementById('time');
-const progressText = document.querySelector('.progress-text');
-const progressBar = document.querySelector('.progress-bar');
-const prevQuestionBtn = document.getElementById('prev-question');
-const nextQuestionBtn = document.getElementById('next-question');
-const submitQuizBtn = document.getElementById('submit-quiz');
-const scoreElement = document.getElementById('score');
-const totalElement = document.getElementById('total');
-const correctCountElement = document.getElementById('correct-count');
-const wrongCountElement = document.getElementById('wrong-count');
-const percentageElement = document.getElementById('percentage');
-const timeTakenElement = document.getElementById('time-taken');
+const sections = {
+    units: document.getElementById('units-section'),
+    lessons: document.getElementById('lessons-section'),
+    tests: document.getElementById('tests-section'),
+    quiz: document.getElementById('quiz-section'),
+    results: document.getElementById('results-section')
+};
 
-// تهيئة الواجهة
+const containers = {
+    units: document.querySelector('.units-container'),
+    lessons: document.querySelector('.lessons-container'),
+    tests: document.querySelector('.tests-container'),
+    quiz: document.querySelector('.quiz-container')
+};
+
+const navButtons = {
+    backToUnits: document.getElementById('back-to-units'),
+    backToLessons: document.getElementById('back-to-lessons'),
+    backToTests: document.getElementById('back-to-tests'),
+    backToTestsFromResults: document.getElementById('back-to-tests-from-results')
+};
+
+const quizElements = {
+    time: document.getElementById('time'),
+    progressText: document.querySelector('.progress-text'),
+    progressBar: document.querySelector('.progress-bar-inner'),
+    prevQuestion: document.getElementById('prev-question'),
+    nextQuestion: document.getElementById('next-question'),
+    submitQuiz: document.getElementById('submit-quiz')
+};
+
+const resultElements = {
+    score: document.getElementById('score'),
+    total: document.getElementById('total'),
+    correctCount: document.getElementById('correct-count'),
+    wrongCount: document.getElementById('wrong-count'),
+    percentage: document.getElementById('percentage'),
+    restartQuiz: document.getElementById('restart-quiz')
+};
+
+// ==================== 2. تهيئة التطبيق ====================
 function initApp() {
-    renderUnits();
-    setupEventListeners();
+    // تحميل البيانات من ملف data.json
+    fetch('data.json')
+        .then(response => response.json())
+        .then(data => {
+            appData.units = data.units;
+            renderUnits();
+            setupEventListeners();
+        })
+        .catch(error => {
+            console.error('حدث خطأ في تحميل البيانات:', error);
+            alert('تعذر تحميل البيانات، يرجى إعادة تحميل الصفحة');
+        });
 }
 
-// عرض الوحدات
+// ==================== 3. عرض الوحدات ====================
 function renderUnits() {
-    unitsContainer.innerHTML = '';
+    containers.units.innerHTML = '';
     
-    units.forEach(unit => {
+    appData.units.forEach(unit => {
         const unitCard = document.createElement('div');
         unitCard.className = 'unit-card';
         unitCard.innerHTML = `
+            <div class="badge">الوحدة ${unit.id}</div>
             <i class="${unit.icon}"></i>
             <h3>${unit.title}</h3>
             <p>${unit.description}</p>
-            <div class="unit-progress">
-                <div class="unit-progress-bar" style="width: ${unit.progress}%"></div>
-            </div>
         `;
         
         unitCard.addEventListener('click', () => {
-            currentUnit = unit.id;
-            showTestsSection();
+            appData.currentUnit = unit;
+            showLessonsSection();
         });
         
-        unitsContainer.appendChild(unitCard);
+        containers.units.appendChild(unitCard);
     });
 }
 
-// عرض الاختبارات
-function renderTests() {
-    testsContainer.innerHTML = '';
+// ==================== 4. عرض الدروس ====================
+function renderLessons() {
+    containers.lessons.innerHTML = '';
     
-    tests.forEach(test => {
+    appData.currentUnit.lessons.forEach(lesson => {
+        const lessonCard = document.createElement('div');
+        lessonCard.className = 'lesson-card';
+        lessonCard.innerHTML = `
+            <div class="badge">الدرس ${lesson.id}</div>
+            <i class="${lesson.icon}"></i>
+            <h3>${lesson.title}</h3>
+            <p>${lesson.description}</p>
+        `;
+        
+        lessonCard.addEventListener('click', () => {
+            appData.currentLesson = lesson;
+            showTestsSection();
+        });
+        
+        containers.lessons.appendChild(lessonCard);
+    });
+}
+
+// ==================== 5. عرض الاختبارات ====================
+function renderTests() {
+    containers.tests.innerHTML = '';
+    
+    appData.currentLesson.tests.forEach(test => {
         const testCard = document.createElement('div');
         testCard.className = 'test-card';
         testCard.innerHTML = `
+            <div class="badge">اختبار ${test.id}</div>
             <i class="${test.icon}"></i>
             <h3>${test.title}</h3>
             <p>${test.description}</p>
         `;
         
         testCard.addEventListener('click', () => {
-            currentTest = test.id;
-            showQuizSection();
+            appData.currentTest = test;
+            startQuiz();
         });
         
-        testsContainer.appendChild(testCard);
+        containers.tests.appendChild(testCard);
     });
 }
 
-// عرض السؤال الحالي
+// ==================== 6. إدارة الأسئلة ====================
+function startQuiz() {
+    appData.currentQuestion = 0;
+    appData.userAnswers = Array(appData.currentTest.questions.length).fill(null);
+    appData.startTime = new Date();
+    
+    renderQuestion();
+    startTimer();
+    showSection(sections.quiz);
+}
+
 function renderQuestion() {
-    quizContainer.innerHTML = '';
+    const question = appData.currentTest.questions[appData.currentQuestion];
     
-    const question = quizQuestions[currentQuestion];
-    
-    const questionElement = document.createElement('div');
-    questionElement.className = 'question';
-    questionElement.innerHTML = `
-        <div class="question-number">السؤال ${currentQuestion + 1}</div>
-        <div class="question-text">${question.question}</div>
-        <div class="options">
-            ${question.options.map((option, index) => `
-                <label class="option">
-                    <input type="radio" name="answer" value="${index}" 
-                        ${userAnswers[currentQuestion] === index ? 'checked' : ''}>
-                    <span class="checkmark"></span>
-                    <span class="option-text">${option}</span>
-                </label>
-            `).join('')}
+    containers.quiz.innerHTML = `
+        <div class="question">
+            <div class="question-number">السؤال ${appData.currentQuestion + 1}</div>
+            <div class="question-text">${question.text}</div>
+            <div class="options">
+                ${question.options.map((option, index) => `
+                    <label class="option ${getOptionClass(index)}">
+                        <input type="radio" name="answer" value="${index}" 
+                            ${appData.userAnswers[appData.currentQuestion] === index ? 'checked' : ''}>
+                        <span class="checkmark"></span>
+                        <span class="option-text">${option}</span>
+                    </label>
+                `).join('')}
+            </div>
         </div>
     `;
     
     // إضافة مستمعات الأحداث للإجابات
-    const radioInputs = questionElement.querySelectorAll('input[type="radio"]');
+    const radioInputs = containers.quiz.querySelectorAll('input[type="radio"]');
     radioInputs.forEach(input => {
         input.addEventListener('change', (e) => {
-            userAnswers[currentQuestion] = parseInt(e.target.value);
+            appData.userAnswers[appData.currentQuestion] = parseInt(e.target.value);
         });
     });
     
-    quizContainer.appendChild(questionElement);
-    
     // تحديث شريط التقدم
-    const progressPercent = ((currentQuestion + 1) / quizQuestions.length) * 100;
-    document.querySelector('.progress-bar').style.width = `${progressPercent}%`;
-    progressText.textContent = `السؤال ${currentQuestion + 1} من ${quizQuestions.length}`;
+    const progressPercent = ((appData.currentQuestion + 1) / appData.currentTest.questions.length) * 100;
+    quizElements.progressBar.style.width = `${progressPercent}%`;
+    quizElements.progressText.textContent = `السؤال ${appData.currentQuestion + 1} من ${appData.currentTest.questions.length}`;
     
     // تحديث حالة الأزرار
-    prevQuestionBtn.disabled = currentQuestion === 0;
-    nextQuestionBtn.disabled = currentQuestion === quizQuestions.length - 1;
-    submitQuizBtn.style.display = currentQuestion === quizQuestions.length - 1 ? 'block' : 'none';
+    quizElements.prevQuestion.disabled = appData.currentQuestion === 0;
+    quizElements.nextQuestion.disabled = appData.currentQuestion === appData.currentTest.questions.length - 1;
+    quizElements.submitQuiz.style.display = 
+        appData.currentQuestion === appData.currentTest.questions.length - 1 ? 'block' : 'none';
 }
 
-// بدء المؤقت
+function getOptionClass(optionIndex) {
+    if (appData.userAnswers[appData.currentQuestion] === optionIndex) {
+        return 'selected';
+    }
+    return '';
+}
+
 function startTimer() {
-    startTime = new Date();
-    
-    // تعيين الوقت الابتدائي
+    // تعيين الوقت الابتدائي (10 دقائق)
     let minutes = 10;
     let seconds = 0;
     
-    timerInterval = setInterval(() => {
+    clearInterval(appData.timerInterval);
+    
+    appData.timerInterval = setInterval(() => {
         seconds--;
         if (seconds < 0) {
             minutes--;
@@ -280,162 +223,121 @@ function startTimer() {
         }
         
         if (minutes < 0) {
-            clearInterval(timerInterval);
+            clearInterval(appData.timerInterval);
             submitQuiz();
             return;
         }
         
-        timeElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        quizElements.time.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     }, 1000);
 }
 
-// إيقاف المؤقت
-function stopTimer() {
-    clearInterval(timerInterval);
-}
-
-// حساب النتائج
-function calculateResults() {
+// ==================== 7. حساب النتائج ====================
+function submitQuiz() {
+    clearInterval(appData.timerInterval);
+    
     const endTime = new Date();
-    const timeTaken = Math.floor((endTime - startTime) / 1000);
+    const timeTaken = Math.floor((endTime - appData.startTime) / 1000);
     
     let correctCount = 0;
     
-    userAnswers.forEach((answer, index) => {
-        if (answer === quizQuestions[index].correctAnswer) {
+    appData.userAnswers.forEach((answer, index) => {
+        const question = appData.currentTest.questions[index];
+        if (answer === question.correctAnswer) {
             correctCount++;
         }
     });
     
-    const totalQuestions = quizQuestions.length;
+    const totalQuestions = appData.currentTest.questions.length;
     const percentage = Math.round((correctCount / totalQuestions) * 100);
     
-    return {
+    // حفظ النتائج
+    saveResult({
+        unitId: appData.currentUnit.id,
+        lessonId: appData.currentLesson.id,
+        testId: appData.currentTest.id,
+        date: new Date().toISOString(),
         score: correctCount,
         total: totalQuestions,
-        correctCount,
-        wrongCount: totalQuestions - correctCount,
-        percentage,
-        timeTaken
-    };
+        percentage: percentage,
+        timeTaken: timeTaken
+    });
+    
+    // عرض النتائج
+    showResults(correctCount, totalQuestions, percentage, timeTaken);
 }
 
-// عرض النتائج
-function showResults() {
-    const results = calculateResults();
-    
-    scoreElement.textContent = results.score;
-    totalElement.textContent = results.total;
-    correctCountElement.textContent = results.correctCount;
-    wrongCountElement.textContent = results.wrongCount;
-    percentageElement.textContent = results.percentage;
-    timeTakenElement.textContent = results.timeTaken;
+function showResults(correctCount, totalQuestions, percentage, timeTaken) {
+    resultElements.score.textContent = correctCount;
+    resultElements.total.textContent = totalQuestions;
+    resultElements.correctCount.textContent = correctCount;
+    resultElements.wrongCount.textContent = totalQuestions - correctCount;
+    resultElements.percentage.textContent = percentage;
     
     // تحديث شارة النتائج
     const resultBadge = document.querySelector('.result-badge');
-    if (results.percentage >= 80) {
+    if (percentage >= 80) {
         resultBadge.style.background = 'linear-gradient(135deg, #28a745, #4cc9f0)';
-    } else if (results.percentage >= 50) {
+    } else if (percentage >= 50) {
         resultBadge.style.background = 'linear-gradient(135deg, #ffc107, #fd7e14)';
     } else {
         resultBadge.style.background = 'linear-gradient(135deg, #dc3545, #f72585)';
     }
     
-    showSection(resultsSection);
+    showSection(sections.results);
 }
 
-// تقديم الاختبار
-function submitQuiz() {
-    stopTimer();
-    saveResults();
-    showResults();
-}
-
-// حفظ النتائج
-function saveResults() {
-    const results = calculateResults();
-    const resultData = {
-        unit: currentUnit,
-        test: currentTest,
-        date: new Date().toISOString(),
-        score: results.score,
-        total: results.total,
-        percentage: results.percentage,
-        timeTaken: results.timeTaken
-    };
-    
-    // هنا يمكنك إضافة كود لحفظ النتائج في localStorage أو قاعدة البيانات
-    console.log('نتيجة الاختبار:', resultData);
-}
-
-// إظهار قسم معين وإخفاء الآخرين
-function showSection(section) {
-    [unitsSection, testsSection, quizSection, resultsSection].forEach(sec => {
-        sec.classList.remove('active');
-    });
-    section.classList.add('active');
-}
-
-// إظهار قسم الوحدات
-function showUnitsSection() {
-    showSection(unitsSection);
-}
-
-// إظهار قسم الاختبارات
-function showTestsSection() {
-    renderTests();
-    showSection(testsSection);
-}
-
-// إظهار قسم الاختبار
-function showQuizSection() {
-    currentQuestion = 0;
-    userAnswers = Array(quizQuestions.length).fill(null);
-    renderQuestion();
-    startTimer();
-    
-    // تحديث معلومات الاختبار
-    const unitTitle = units.find(u => u.id === currentUnit).title;
-    const testTitle = tests.find(t => t.id === currentTest).title;
-    currentUnitElement.textContent = unitTitle;
-    currentTestElement.textContent = testTitle;
-    
-    showSection(quizSection);
-}
-
-// إعداد مستمعات الأحداث
+// ==================== 8. مستمعات الأحداث ====================
 function setupEventListeners() {
     // أزرار التنقل
-    document.getElementById('back-to-units').addEventListener('click', showUnitsSection);
-    document.getElementById('back-to-tests').addEventListener('click', showTestsSection);
-    document.getElementById('back-to-tests-from-results').addEventListener('click', showTestsSection);
+    navButtons.backToUnits.addEventListener('click', showUnitsSection);
+    navButtons.backToLessons.addEventListener('click', showLessonsSection);
+    navButtons.backToTests.addEventListener('click', showTestsSection);
+    navButtons.backToTestsFromResults.addEventListener('click', showTestsSection);
     
     // أزرار التنقل بين الأسئلة
-    prevQuestionBtn.addEventListener('click', () => {
-        if (currentQuestion > 0) {
-            currentQuestion--;
+    quizElements.prevQuestion.addEventListener('click', () => {
+        if (appData.currentQuestion > 0) {
+            appData.currentQuestion--;
             renderQuestion();
         }
     });
     
-    nextQuestionBtn.addEventListener('click', () => {
-        if (currentQuestion < quizQuestions.length - 1) {
-            currentQuestion++;
+    quizElements.nextQuestion.addEventListener('click', () => {
+        if (appData.currentQuestion < appData.currentTest.questions.length - 1) {
+            appData.currentQuestion++;
             renderQuestion();
         }
     });
     
     // زر تقديم الاختبار
-    submitQuizBtn.addEventListener('click', submitQuiz);
+    quizElements.submitQuiz.addEventListener('click', submitQuiz);
     
-    // أزرار النتائج
-    document.getElementById('restart-quiz').addEventListener('click', () => {
-        showQuizSection();
+    // زر إعادة الاختبار
+    resultElements.restartQuiz.addEventListener('click', startQuiz);
+}
+
+// وظائف العرض
+function showSection(section) {
+    Object.values(sections).forEach(sec => {
+        sec.classList.remove('active');
     });
-    
-    document.getElementById('view-answers').addEventListener('click', () => {
-        alert('هذه الميزة ستكون متاحة في الإصدارات القادمة!');
-    });
+    section.classList.add('active');
+}
+
+function showUnitsSection() {
+    appData.currentUnit = null;
+    showSection(sections.units);
+}
+
+function showLessonsSection() {
+    renderLessons();
+    showSection(sections.lessons);
+}
+
+function showTestsSection() {
+    renderTests();
+    showSection(sections.tests);
 }
 
 // بدء التطبيق عند تحميل الصفحة
