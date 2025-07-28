@@ -1,30 +1,35 @@
-/* التهيئة العامة */
+/* ألوان الطالب الجديدة */
 :root {
-    --primary: #4361ee;
-    --secondary: #3f37c9;
-    --success: #4cc9f0;
-    --error: #f72585;
-    --warning: #f8961e;
-    --dark: #212529;
-    --light: #f8f9fa;
-    --gray: #6c757d;
-    --border-radius: 12px;
-    --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    --transition: all 0.3s ease;
+    --primary: #4361ee;    /* أزرق رئيسي */
+    --secondary: #ff7b00;  /* برتقالي ثانوي */
+    --success: #4cc9f0;    /* أزرق فاتح */
+    --error: #f72585;      /* وردي للخطأ */
+    --light: #f8f9fa;      /* خلفية فاتحة */
+    --dark: #212529;       /* نص داكن */
+    --gray: #6c757d;       /* رمادي */
+    --border-radius: 15px;  /* زوايا دائرية */
+    --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* ظل ناعم */
+    --transition: all 0.3s ease; /* حركات سلسة */
 }
 
+/* التهيئة العامة للهواتف */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    background-color: #f0f2f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
     color: var(--dark);
     line-height: 1.6;
-    direction: rtl;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    touch-action: manipulation;
 }
 
 /* شريط التنقل */
@@ -32,62 +37,59 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 5%;
-    background-color: white;
+    padding: 12px 20px;
+    background: linear-gradient(90deg, var(--primary) 0%, #5a7cff 100%);
     box-shadow: var(--box-shadow);
     position: sticky;
     top: 0;
     z-index: 100;
+    color: white;
 }
 
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 10px;
 }
 
 .logo i {
-    font-size: 2rem;
-    color: var(--primary);
+    font-size: 24px;
 }
 
 .logo h1 {
-    font-size: 1.5rem;
+    font-size: 18px;
     font-weight: 700;
-    color: var(--dark);
 }
 
 .user-info {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-}
-
-.user-info span {
-    font-weight: 500;
+    gap: 8px;
+    font-size: 14px;
 }
 
 .avatar {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background-color: var(--primary);
-    color: white;
+    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
+    font-size: 16px;
 }
 
 /* المحتوى الرئيسي */
 main {
-    padding: 2rem 5%;
-    min-height: calc(100vh - 140px);
+    flex: 1;
+    padding: 20px;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 section {
     display: none;
-    animation: fadeIn 0.5s ease;
+    animation: fadeIn 0.4s ease;
 }
 
 section.active {
@@ -95,98 +97,102 @@ section.active {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
 .section-header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 12px;
 }
 
 .section-header h2 {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    font-size: 1.75rem;
+    gap: 8px;
+    font-size: 20px;
     color: var(--dark);
 }
 
 .back-btn {
-    background: none;
+    background: rgba(67, 97, 238, 0.1);
     border: none;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 6px;
     color: var(--primary);
     font-weight: 500;
+    font-size: 14px;
     cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius);
+    padding: 8px 12px;
+    border-radius: 50px;
     transition: var(--transition);
 }
 
 .back-btn:hover {
-    background-color: rgba(67, 97, 238, 0.1);
+    background: rgba(67, 97, 238, 0.2);
 }
 
-/* تصميم الوحدات والاختبارات */
-.units-container, .tests-container {
+/* بطاقات الوحدات والدروس */
+.units-container, .lessons-container, .tests-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
 }
 
-.unit-card, .test-card {
-    background-color: white;
+.unit-card, .lesson-card, .test-card {
+    background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    padding: 1.5rem;
+    padding: 20px 15px;
     transition: var(--transition);
     cursor: pointer;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-}
-
-.unit-card:hover, .test-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-}
-
-.unit-card i, .test-card i {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: var(--primary);
-}
-
-.unit-card h3, .test-card h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-    color: var(--dark);
-}
-
-.unit-card p, .test-card p {
-    color: var(--gray);
-    font-size: 0.9rem;
-}
-
-.unit-progress {
-    width: 100%;
-    height: 8px;
-    background-color: #e9ecef;
-    border-radius: 4px;
-    margin-top: 1rem;
+    border: 2px solid transparent;
+    position: relative;
     overflow: hidden;
 }
 
-.unit-progress-bar {
-    height: 100%;
-    background-color: var(--success);
-    border-radius: 4px;
+.unit-card:hover, .lesson-card:hover, .test-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary);
+}
+
+.unit-card i, .lesson-card i, .test-card i {
+    font-size: 32px;
+    margin-bottom: 12px;
+    color: var(--primary);
+}
+
+.unit-card h3, .lesson-card h3, .test-card h3 {
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: var(--dark);
+    font-weight: 600;
+}
+
+.unit-card p, .lesson-card p, .test-card p {
+    color: var(--gray);
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--secondary);
+    color: white;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-weight: 500;
 }
 
 /* تصميم الاختبارات */
@@ -194,9 +200,9 @@ section.active {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    background-color: white;
-    padding: 1rem;
+    margin-bottom: 20px;
+    background: white;
+    padding: 15px;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
 }
@@ -204,10 +210,10 @@ section.active {
 .timer {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 6px;
     font-weight: 500;
     color: var(--dark);
-    font-size: 1.1rem;
+    font-size: 16px;
 }
 
 .timer i {
@@ -216,54 +222,53 @@ section.active {
 
 .progress {
     flex-grow: 1;
-    max-width: 300px;
+    max-width: 200px;
 }
 
 .progress-bar {
     height: 8px;
-    background-color: #e9ecef;
+    background: #e9ecef;
     border-radius: 4px;
     overflow: hidden;
-    margin-bottom: 0.5rem;
+    margin-bottom: 6px;
 }
 
-.progress-bar::before {
-    content: '';
-    display: block;
+.progress-bar-inner {
     height: 100%;
-    width: 33%;
-    background-color: var(--primary);
+    background: var(--primary);
     border-radius: 4px;
+    width: 30%;
+    transition: width 0.4s ease;
 }
 
 .progress-text {
-    font-size: 0.9rem;
+    font-size: 13px;
     color: var(--gray);
-    text-align: left;
+    text-align: center;
 }
 
 .quiz-container {
-    background-color: white;
+    background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    padding: 2rem;
-    margin-bottom: 1.5rem;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 .question {
-    margin-bottom: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .question-number {
-    font-size: 1rem;
+    font-size: 14px;
     color: var(--primary);
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 8px;
 }
 
 .question-text {
-    font-size: 1.25rem;
-    margin-bottom: 1.5rem;
+    font-size: 18px;
+    margin-bottom: 20px;
     font-weight: 500;
     line-height: 1.4;
 }
@@ -271,23 +276,38 @@ section.active {
 .options {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 12px;
 }
 
 .option {
-    padding: 1rem;
+    padding: 15px;
     border: 2px solid #e9ecef;
-    border-radius: var(--border-radius);
+    border-radius: 12px;
     cursor: pointer;
     transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 12px;
 }
 
 .option:hover {
     border-color: var(--primary);
-    background-color: rgba(67, 97, 238, 0.05);
+    background: rgba(67, 97, 238, 0.05);
+}
+
+.option.selected {
+    border-color: var(--primary);
+    background: rgba(67, 97, 238, 0.1);
+}
+
+.option.correct {
+    border-color: #4cc9f0;
+    background: rgba(76, 201, 240, 0.1);
+}
+
+.option.incorrect {
+    border-color: #f72585;
+    background: rgba(247, 37, 133, 0.1);
 }
 
 .option input[type="radio"] {
@@ -295,101 +315,109 @@ section.active {
 }
 
 .option .checkmark {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     border: 2px solid #adb5bd;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
 }
 
 .option input[type="radio"]:checked + .checkmark {
     border-color: var(--primary);
-    background-color: var(--primary);
+    background: var(--primary);
 }
 
 .option input[type="radio"]:checked + .checkmark::after {
     content: '';
     display: block;
-    width: 10px;
-    height: 10px;
-    background-color: white;
+    width: 12px;
+    height: 12px;
+    background: white;
     border-radius: 50%;
 }
 
 .quiz-controls {
     display: flex;
     justify-content: space-between;
+    gap: 10px;
 }
 
 .btn {
-    padding: 0.75rem 1.5rem;
+    padding: 12px 20px;
     border: none;
-    border-radius: var(--border-radius);
+    border-radius: 12px;
     font-weight: 500;
+    font-size: 15px;
     cursor: pointer;
     transition: var(--transition);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    gap: 8px;
+    flex: 1;
+    text-align: center;
 }
 
 .btn.primary {
-    background-color: var(--primary);
+    background: var(--primary);
     color: white;
+    box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
 }
 
 .btn.primary:hover {
-    background-color: var(--secondary);
+    background: #3650d0;
+    transform: translateY(-2px);
 }
 
 .btn.secondary {
-    background-color: white;
+    background: white;
     color: var(--primary);
-    border: 1px solid var(--primary);
+    border: 2px solid var(--primary);
 }
 
 .btn.secondary:hover {
-    background-color: rgba(67, 97, 238, 0.1);
+    background: rgba(67, 97, 238, 0.1);
 }
 
 .btn.success {
-    background-color: var(--success);
+    background: var(--success);
     color: white;
+    box-shadow: 0 4px 10px rgba(76, 201, 240, 0.3);
 }
 
 .btn.success:hover {
-    background-color: #35b4d9;
+    background: #3bb4d9;
+    transform: translateY(-2px);
 }
 
 .btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    transform: none !important;
 }
 
 /* صفحة النتائج */
 .result-card {
-    background-color: white;
+    background: white;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
-    padding: 2rem;
-    max-width: 600px;
-    margin: 0 auto;
+    padding: 25px;
 }
 
 .result-header {
     text-align: center;
-    margin-bottom: 2rem;
-    position: relative;
+    margin-bottom: 25px;
 }
 
 .result-header h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
-    margin-bottom: 1rem;
+    gap: 10px;
+    margin-bottom: 15px;
     color: var(--dark);
 }
 
@@ -402,35 +430,38 @@ section.active {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem;
+    font-size: 32px;
     font-weight: 700;
-    margin: 0 auto 1.5rem;
+    margin: 0 auto 20px;
     border: 5px solid white;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .result-details {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-bottom: 2rem;
+    gap: 15px;
+    margin-bottom: 25px;
 }
 
 .detail {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    background-color: #f8f9fa;
-    border-radius: var(--border-radius);
+    gap: 12px;
+    padding: 12px 15px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    font-size: 16px;
 }
 
 .detail i {
-    font-size: 1.5rem;
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
 }
 
 .detail i.success {
-    color: #28a745;
+    color: #4cc9f0;
 }
 
 .detail i.error {
@@ -440,75 +471,56 @@ section.active {
 .result-actions {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 12px;
 }
 
 /* تذييل الصفحة */
 footer {
-    background-color: var(--dark);
+    background: var(--dark);
     color: white;
-    padding: 1.5rem 5%;
+    padding: 20px;
     text-align: center;
+    font-size: 14px;
 }
 
 .footer-content {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
 }
 
-.social-links {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.social-links a {
-    color: white;
-    font-size: 1.25rem;
-    transition: var(--transition);
-}
-
-.social-links a:hover {
-    color: var(--success);
-}
-
-/* تصميم متجاوب */
-@media (max-width: 768px) {
-    .units-container, .tests-container {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    }
-    
-    .result-actions {
-        flex-direction: column;
+/* تصميم متجاوب للهواتف */
+@media (max-width: 480px) {
+    .units-container, .lessons-container, .tests-container {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
     
     .quiz-controls {
-        flex-direction: column;
-        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .btn {
+        min-width: 120px;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 360px) {
     header {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 1rem;
+        padding: 10px 15px;
     }
     
-    .units-container, .tests-container {
-        grid-template-columns: 1fr;
+    .logo h1 {
+        font-size: 16px;
     }
     
-    .quiz-info {
-        flex-direction: column;
-        gap: 1rem;
-        align-items: flex-start;
+    .user-info span {
+        display: none;
     }
     
-    .progress {
-        width: 100%;
+    .section-header h2 {
+        font-size: 18px;
+    }
+    
+    .question-text {
+        font-size: 16px;
     }
 }
