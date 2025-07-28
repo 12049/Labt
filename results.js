@@ -1,36 +1,78 @@
-// هذا الملف سيتعامل مع حفظ واسترجاع النتائج
-// يمكن استخدام localStorage لحفظ النتائج محلياً
+/**
+ * هذا الملف مسؤول عن إدارة النتائج وحفظها
+ * 
+ * الوظائف:
+ * 1. حفظ النتائج في localStorage
+ * 2. استرجاع النتائج
+ * 3. حذف النتائج
+ * 4. تصفية النتائج حسب الوحدة/الدرس/الاختبار
+ */
 
-// دالة لحفظ النتائج
+// دالة لحفظ النتيجة
 function saveResult(result) {
-    // الحصول على النتائج الحالية من localStorage
-    const existingResults = JSON.parse(localStorage.getItem('quizResults')) || [];
-    
-    // إضافة النتيجة الجديدة
-    existingResults.push(result);
-    
-    // حفظ النتائج المحدثة
-    localStorage.setItem('quizResults', JSON.stringify(existingResults));
+    try {
+        // الحصول على النتائج الحالية
+        const existingResults = JSON.parse(localStorage.getItem('quizResults')) || [];
+        
+        // إضافة النتيجة الجديدة
+        existingResults.push(result);
+        
+        // حفظ النتائج المحدثة
+        localStorage.setItem('quizResults', JSON.stringify(existingResults));
+        
+        // حفظ نسخة احتياطية في ملف JSON (محاكاة)
+        downloadResultsBackup(existingResults);
+        
+        return true;
+    } catch (error) {
+        console.error('حدث خطأ أثناء حفظ النتيجة:', error);
+        return false;
+    }
 }
 
-// دالة لاسترجاع النتائج
+// دالة لاسترجاع جميع النتائج
 function getResults() {
-    return JSON.parse(localStorage.getItem('quizResults')) || [];
+    try {
+        return JSON.parse(localStorage.getItem('quizResults')) || [];
+    } catch (error) {
+        console.error('حدث خطأ أثناء استرجاع النتائج:', error);
+        return [];
+    }
+}
+
+// دالة لتصفية النتائج حسب المعايير
+function filterResults(criteria) {
+    const results = getResults();
+    return results.filter(result => {
+        return (!criteria.unitId || result.unitId === criteria.unitId) &&
+               (!criteria.lessonId || result.lessonId === criteria.lessonId) &&
+               (!criteria.testId || result.testId === criteria.testId);
+    });
+}
+
+// دالة لتنزيل نسخة احتياطية من النتائج (محاكاة)
+function downloadResultsBackup(results) {
+    // في تطبيق حقيقي، هنا سيتم إرسال البيانات إلى الخادم
+    // لكننا سنحاكي هذه العملية
+    const dataStr = JSON.stringify(results, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    
+    // هذا الكود للتوضيح فقط ولن يعمل فعلياً في المتصفح
+    console.log('تم إنشاء نسخة احتياطية من النتائج:', blob);
 }
 
 // دالة لحذف النتائج
 function clearResults() {
-    localStorage.removeItem('quizResults');
+    try {
+        localStorage.removeItem('quizResults');
+        return true;
+    } catch (error) {
+        console.error('حدث خطأ أثناء حذف النتائج:', error);
+        return false;
+    }
 }
 
-// دالة للحصول على نتائج وحدة محددة
-function getResultsByUnit(unitId) {
-    const results = getResults();
-    return results.filter(result => result.unit === unitId);
-}
-
-// دالة للحصول على نتائج اختبار محدد
-function getResultsByTest(unitId, testId) {
-    const results = getResults();
-    return results.filter(result => result.unit === unitId && result.test === testId);
-}
+// ===== أمثلة استخدام =====
+// saveResult({ unit: 1, lesson: 1, test: 1, score: 8, total: 10 });
+// const results = getResults();
+// const unitResults = filterResults({ unitId: 1 });
